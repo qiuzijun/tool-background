@@ -43,6 +43,7 @@
 import { defineComponent, reactive, ref } from "vue";
 import { Form, Button, Input } from "ant-design-vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
+import { message } from "ant-design-vue";
 import { useUser } from "@/store/modules/user";
 import { useRouter, useRoute } from "vue-router";
 export default defineComponent({
@@ -112,17 +113,18 @@ export default defineComponent({
         .then((data) => {
           // 登录重定向
           if (route.query.redirect) {
-            router.push({
+            router.replace({
               path: `${route.query.redirect}`,
             });
           }
           // 登录成功跳转首页
-          router.push({
+          router.replace({
             name: "layout",
           });
+          message.success("登录成功");
         })
         .catch((err) => {
-          console.log(err);
+          message.error("登录失败");
         });
     };
     // 提交表单且数据验证失败后回调事件
