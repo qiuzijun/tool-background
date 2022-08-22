@@ -34,33 +34,42 @@
           ><LockOutlined style="color: rgba(0, 0, 0, 0.25)" /></template
       ></a-input>
     </a-form-item>
+    <a-form-item has-feedback name="checked">
+      <a-checkbox v-model:checked="formState.checked">记住密码</a-checkbox>
+    </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" size="large" html-type="submit">登录</a-button>
+      <a-button
+        :disabled="disabled"
+        type="primary"
+        size="large"
+        html-type="submit"
+        >登录</a-button
+      >
     </a-form-item>
   </a-form>
 </template>
 <script>
-import { defineComponent, reactive, ref } from "vue";
-import { Form, Button, Input } from "ant-design-vue";
+import { defineComponent, reactive, computed,ref } from "vue";
+import { Form, Button, Input, Checkbox } from "ant-design-vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
 import { useUser } from "@/store/modules/user";
 import { useRouter, useRoute } from "vue-router";
+import { setPass, getPass } from "@/utils/tool";
 export default defineComponent({
   components: {
     [Form.name]: Form,
     [Form.Item.name]: Form.Item,
     [Button.name]: Button,
     [Input.name]: Input,
+    [Checkbox.name]: Checkbox,
     UserOutlined,
     LockOutlined,
   },
   setup() {
     const formRef = ref();
-    const formState = reactive({
-      account: "",
-      password: "",
-    });
+    // 表单数据
+    const formState = reactive(getPass());
     const store = useUser();
     const router = useRouter();
     const route = useRoute();
@@ -95,6 +104,7 @@ export default defineComponent({
           trigger: "change",
         },
       ],
+      checked: [],
     };
     //表单布局
     const layout = {
@@ -122,6 +132,10 @@ export default defineComponent({
             name: "layout",
           });
           message.success("登录成功");
+          // 记住密码
+          if (values.checked) {
+            setPass(values);
+          }
         })
         .catch((err) => {
           message.error("登录失败");
@@ -135,7 +149,9 @@ export default defineComponent({
     const handleValidate = (...args) => {
       //   console.log(args);
     };
-
+    const disabled = computed(() => {
+      return !(formState.account && formState.password);
+    });
     return {
       formState,
       formRef,
@@ -144,6 +160,7 @@ export default defineComponent({
       handleFinishFailed,
       handleFinish,
       handleValidate,
+      disabled
     };
   },
 });

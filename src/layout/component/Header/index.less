@@ -1,11 +1,36 @@
-.trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-.trigger:hover {
-  color: #1890ff;
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .avater {
+    width: 150px;
+    height: 100%;
+    margin-right: 16px;
+    padding: 0 15px 0 0;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:hover {
+      transition: all 0.2s;
+      background-color: rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+    span{
+      margin-left: 20px;
+    }
+  }
 }

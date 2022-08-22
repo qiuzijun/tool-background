@@ -38,14 +38,19 @@
       >
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" html-type="submit" size="large" class="submit"
+      <a-button
+        :disabled="disabled"
+        type="primary"
+        html-type="submit"
+        size="large"
+        class="submit"
         >登录</a-button
       >
     </a-form-item>
   </a-form>
 </template>
 <script>
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, computed, ref } from "vue";
 import { Form, Button, Input } from "ant-design-vue";
 import { MailOutlined, MobileOutlined } from "@ant-design/icons-vue";
 export default defineComponent({
@@ -116,7 +121,9 @@ export default defineComponent({
     const handleValidate = (...args) => {
       console.log(args);
     };
-
+    const disabled = computed(() => {
+      return !(formState.mobile && formState.code);
+    });
     return {
       formState,
       formRef,
@@ -125,6 +132,7 @@ export default defineComponent({
       handleFinishFailed,
       handleFinish,
       handleValidate,
+      disabled,
     };
   },
 });

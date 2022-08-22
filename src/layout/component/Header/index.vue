@@ -1,5 +1,5 @@
 <template>
-  <a-layout-header style="background: #fff; padding: 0">
+  <a-layout-header style="background: #fff; padding: 0" class="header">
     <menu-unfold-outlined
       v-if="collapsed"
       class="trigger"
@@ -10,18 +10,29 @@
       class="trigger"
       @click="() => (collapsed = !collapsed)"
     />
+    <Dropdown>
+      <template #docment>
+        <div class="avater">
+          <a-avatar src="https://joeschmoe.io/api/v1/random" />
+          <span>邱子俊</span>
+        </div>
+      </template>
+    </Dropdown>
   </a-layout-header>
 </template>
 <script>
 import { defineComponent, ref } from "vue";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
-import { Layout } from "ant-design-vue";
+import { Layout, Avatar } from "ant-design-vue";
+import Dropdown from "@/components/Dropdown/index.vue";
 import { watch } from "vue-demi";
 export default defineComponent({
   components: {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    [Avatar.name]: Avatar,
     [Layout.Header.name]: Layout.Header,
+    Dropdown,
   },
   setup(props, { emit }) {
     const collapsed = ref(false);
