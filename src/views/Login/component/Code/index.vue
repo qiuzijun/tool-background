@@ -18,7 +18,7 @@
         placeholder="手机号"
       >
         <template #prefix
-          ><MailOutlined style="color: rgba(0, 0, 0, 0.25)"
+          ><MobileOutlined style="color: rgba(0, 0, 0, 0.25)"
         /></template>
       </a-input>
     </a-form-item>
@@ -28,10 +28,10 @@
         type="text"
         size="large"
         autocomplete="off"
-        placeholder="密码"
+        placeholder="验证码"
       >
         <template #prefix
-          ><MobileOutlined style="color: rgba(0, 0, 0, 0.25)" /></template
+          ><MailOutlined style="color: rgba(0, 0, 0, 0.25)" /></template
       ></a-input>
       <a-button class="code-btn" size="large" @click="active = 2"
         >发送验证码</a-button

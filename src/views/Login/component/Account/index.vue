@@ -49,7 +49,7 @@
   </a-form>
 </template>
 <script>
-import { defineComponent, reactive, computed,ref } from "vue";
+import { defineComponent, reactive, computed, ref } from "vue";
 import { Form, Button, Input, Checkbox } from "ant-design-vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
@@ -133,9 +133,7 @@ export default defineComponent({
           });
           message.success("登录成功");
           // 记住密码
-          if (values.checked) {
-            setPass(values);
-          }
+          values.checked ? setPass(values) : setPass({});
         })
         .catch((err) => {
           message.error("登录失败");
@@ -160,7 +158,7 @@ export default defineComponent({
       handleFinishFailed,
       handleFinish,
       handleValidate,
-      disabled
+      disabled,
     };
   },
 });
