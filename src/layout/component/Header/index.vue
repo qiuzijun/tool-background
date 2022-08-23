@@ -1,23 +1,27 @@
 <template>
   <a-layout-header style="background: #fff; padding: 0" class="header">
-    <menu-unfold-outlined
-      v-if="collapsed"
-      class="trigger"
-      @click="() => (collapsed = !collapsed)"
-    />
-    <menu-fold-outlined
-      v-else
-      class="trigger"
-      @click="() => (collapsed = !collapsed)"
-    />
-    <Dropdown>
-      <template #docment>
-        <div class="avater">
-          <a-avatar src="https://joeschmoe.io/api/v1/random" />
-          <span>邱子俊</span>
-        </div>
-      </template>
-    </Dropdown>
+    <div class="header-top">
+      <menu-unfold-outlined
+        v-if="collapsed"
+        class="trigger"
+        @click="() => (collapsed = !collapsed)"
+      />
+      <menu-fold-outlined
+        v-else
+        class="trigger"
+        @click="() => (collapsed = !collapsed)"
+      />
+      <Dropdown>
+        <template #docment>
+          <div class="avater">
+            <a-avatar src="https://joeschmoe.io/api/v1/random" />
+            <span>邱子俊</span>
+          </div>
+        </template>
+      </Dropdown>
+    </div>
+    <!-- 路由栈 -->
+   <RouteStack/>
   </a-layout-header>
 </template>
 <script>
@@ -25,6 +29,7 @@ import { defineComponent, ref } from "vue";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
 import { Layout, Avatar } from "ant-design-vue";
 import Dropdown from "@/components/Dropdown/index.vue";
+import RouteStack from "@/components/RouteStack/index.vue";
 import { watch } from "vue-demi";
 export default defineComponent({
   components: {
@@ -33,6 +38,7 @@ export default defineComponent({
     [Avatar.name]: Avatar,
     [Layout.Header.name]: Layout.Header,
     Dropdown,
+    RouteStack
   },
   setup(props, { emit }) {
     const collapsed = ref(false);

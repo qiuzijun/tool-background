@@ -1,19 +1,28 @@
 .header {
+  height: auto !important;
+  border: 1px solid #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.header .header-top {
+  width: 100%;
+  height: 42px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.header .trigger {
+.header .header-top .trigger {
   font-size: 18px;
-  line-height: 64px;
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
 }
-.header .trigger:hover {
+.header .header-top .trigger:hover {
   color: #1890ff;
 }
-.header .avater {
+.header .header-top .avater {
   width: 150px;
   height: 100%;
   margin-right: 16px;
@@ -23,11 +32,11 @@
   justify-content: space-between;
   align-items: center;
 }
-.header .avater:hover {
+.header .header-top .avater:hover {
   transition: all 0.2s;
   background-color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-.header .avater span {
+.header .header-top .avater span {
   margin-left: 20px;
 }
