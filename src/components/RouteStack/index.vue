@@ -1,56 +1,39 @@
 <template>
   <div class="stack">
     <TransitionGroup name="list" tag="ul">
-      <li v-for="item in route" :key="item.path">
-        <a href="javascript:;">
-          {{ item.mate.title }}
-          <i class="iconfont icon-closel" @click="removeRoute(item.name)"></i>
-        </a>
+      <li v-for="item in store.stack" :key="item.name">
+        <RouterLink
+          :to="{ name: item.name }"
+          :class="item.icon ? '' : 'active'"
+        >
+          {{ item.meta.title }}
+          <i
+            class="iconfont icon-closel"
+            v-show="item.icon"
+            @click.stop.prevent="removeRoute(item.name)"
+          ></i>
+        </RouterLink>
       </li>
     </TransitionGroup>
   </div>
 </template>
 <script setup>
-import { reactive, toRefs } from "vue";
-
-const state = reactive({
-  route: [
-    {
-      path: "/a",
-      name: "a",
-      mate: {
-        title: "电影",
-      },
-    },
-    {
-      path: "/b",
-      name: "b",
-      mate: {
-        title: "漫画",
-      },
-    },
-    {
-      path: "/c",
-      name: "c",
-      mate: {
-        title: "程序员",
-      },
-    },
-    {
-      path: "/d",
-      name: "d",
-      mate: {
-        title: "UI",
-      },
-    },
-  ],
-});
+import { useStack } from "@/store/modules/stack";
+import { useRouter } from "vue-router";
+const store = useStack();
+const router = useRouter();
 const removeRoute = (name) => {
-  state.route = state.route.filter((data) => {
-    return data.name !== name;
+  const Index = store.stack.findIndex((data) => {
+    return data.name == name;
   });
+  store.removeStack(name);
+  router.push({
+    name: `${store.stack[Index - 1].name}`,
+  });
+  // state.route = state.route.filter((data) => {
+  //   return data.name !== name;
+  // });
 };
-const { route } = toRefs(state);
 </script>
 <style lang="less" scoped>
 @import "./index.less";

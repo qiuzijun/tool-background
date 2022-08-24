@@ -22,7 +22,7 @@ import { PoweroffOutlined, UserOutlined } from "@ant-design/icons-vue";
 import { Dropdown, Menu, message } from "ant-design-vue";
 import { removeToken } from "@/utils/tool";
 import { useUser } from "@/store/modules/user";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 export default defineComponent({
   components: {
     UserOutlined,
@@ -34,6 +34,7 @@ export default defineComponent({
   setup() {
     const store = useUser();
     const router = useRouter();
+    const route = useRoute();
     // 退出登录
     const outLogin = () => {
       removeToken();
@@ -44,6 +45,9 @@ export default defineComponent({
       message.success("退出成功");
       router.replace({
         name: "Login",
+        query: {
+          redirect: route.fullPath,
+        },
       });
     };
     return {

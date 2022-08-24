@@ -7,18 +7,20 @@
   >
     <div class="logo" />
     <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
-      <a-menu-item key="1">
-        <user-outlined />
-        <span>nav 1</span>
-      </a-menu-item>
-      <a-menu-item key="2">
-        <video-camera-outlined />
-        <span>nav 2</span>
-      </a-menu-item>
-      <a-menu-item key="3">
-        <upload-outlined />
-        <span>nav 3</span>
-      </a-menu-item>
+      <template v-for="item in menu" :key="item.name">
+        <template v-if="!item.children">
+          <a-menu-item :key="item.name" @click="routerlink(item)">
+            <template #icon>
+              <i :class="`iconfont ${item.meta.icon}`"></i>
+            </template>
+            {{ item.meta.title }}
+          </a-menu-item>
+        </template>
+        <template v-else>
+          <!-- 递归组件 -->
+          <SubMenu :key="item.name" :menu-info="item" />
+        </template>
+      </template>
     </a-menu>
   </a-layout-sider>
 </template>
@@ -27,14 +29,18 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
+  PieChartOutlined,
 } from "@ant-design/icons-vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { Layout, Menu } from "ant-design-vue";
+import { useRouter, useRoute } from "vue-router";
+import menu from "@/router/menu";
 export default defineComponent({
   components: {
     UserOutlined,
     VideoCameraOutlined,
     UploadOutlined,
+    PieChartOutlined,
     [Layout.Sider.name]: Layout.Sider,
     [Menu.name]: Menu,
     [Menu.Item.name]: Menu.Item,
@@ -47,8 +53,29 @@ export default defineComponent({
     },
   },
   setup() {
+    const selectedKeys = ref(["home"]); //左侧导航栏选中项
+    const router = useRouter();
+    const route = useRoute();
+    const routerlink = (item) => {
+      router.push({
+        name: `${item.name}`,
+      });
+    };
+    // 监听路由变化,导航栏选中定位
+    watch(
+      route,
+      (newValue) => {
+        selectedKeys.value[0] = newValue.name;
+      },
+      {
+        deep: true,
+        immediate: true,
+      }
+    );
     return {
-      selectedKeys: ref(["1"]),
+      menu,
+      selectedKeys,
+      routerlink,
     };
   },
 });

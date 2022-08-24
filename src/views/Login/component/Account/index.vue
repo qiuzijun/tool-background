@@ -126,11 +126,12 @@ export default defineComponent({
             router.replace({
               path: `${route.query.redirect}`,
             });
+          } else {
+            // 登录成功跳转首页
+            router.replace({
+              name: "layout",
+            });
           }
-          // 登录成功跳转首页
-          router.replace({
-            name: "layout",
-          });
           message.success("登录成功");
           // 记住密码
           values.checked ? setPass(values) : setPass({});

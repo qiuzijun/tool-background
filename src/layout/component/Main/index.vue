@@ -1,25 +1,12 @@
 <template>
-  <a-layout-content
-    :style="{
-      margin: '24px 16px',
-      padding: '24px',
-      background: '#fff',
-      minHeight: '280px',
-    }"
-  >
-    Content
-  </a-layout-content>
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <transition name="router" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </keep-alive>
+  </router-view>
 </template>
-<script>
-import { defineComponent } from "vue";
-import { Layout } from "ant-design-vue";
-export default defineComponent({
-  components: {
-    [Layout.Content.name]: Layout.Content,
-  },
-  setup() {},
-});
-</script>
 
 <style lang="less" scoped>
 @import "./index.less";

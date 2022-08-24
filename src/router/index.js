@@ -1,9 +1,16 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import { getToken } from "@/utils/tool";
+import {
+  createRouter,
+  createWebHashHistory
+} from "vue-router";
+import {
+  getToken
+} from "@/utils/tool";
+import cinema from "./menu";//导航菜单
 const Login = () => import("@/views/Login/index.vue");
 const Layout = () => import("@/layout/index.vue");
-const routes = [
-  {
+
+
+const routes = [{
     path: "/login",
     name: "Login",
     component: Login,
@@ -14,10 +21,9 @@ const routes = [
   {
     path: "/",
     name: "layout",
+    redirect: '/home',
     component: Layout,
-    meta: {
-      title: "首页",
-    },
+    children: cinema
   },
 ];
 
