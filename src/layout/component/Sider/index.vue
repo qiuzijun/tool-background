@@ -6,7 +6,13 @@
     collapsible
   >
     <div class="logo" />
-    <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
+    <a-menu
+      v-model:selectedKeys="selectedKeys"
+      :openKeys="openKeys"
+      @openChange="openChange"
+      theme="light"
+      mode="inline"
+    >
       <template v-for="item in menu" :key="item.name">
         <template v-if="!item.children">
           <a-menu-item :key="item.name" @click="routerlink(item)">
@@ -34,6 +40,7 @@ import {
 import { defineComponent, ref, watch } from "vue";
 import { Layout, Menu } from "ant-design-vue";
 import { useRouter, useRoute } from "vue-router";
+import { useStack } from "@/store/modules/stack";
 import menu from "@/router/menu";
 export default defineComponent({
   components: {
@@ -53,18 +60,28 @@ export default defineComponent({
     },
   },
   setup() {
-    const selectedKeys = ref(["home"]); //左侧导航栏选中项
+    const selectedKeys = ref(["home"]); //左侧导航栏默认选中项
+    const openKeys = ref([""]); //左侧导航栏当前选中项
     const router = useRouter();
     const route = useRoute();
+    const store = useStack();
     const routerlink = (item) => {
       router.push({
         name: `${item.name}`,
       });
     };
+    const openChange = (keys) => {
+      if (keys.length !== 0) {
+        openKeys.value = [keys[1]];
+      } else {
+        openKeys.value = [""];
+      }
+    };
     // 监听路由变化,导航栏选中定位
     watch(
       route,
       (newValue) => {
+        store.addStack(newValue);
         selectedKeys.value[0] = newValue.name;
       },
       {
@@ -75,7 +92,9 @@ export default defineComponent({
     return {
       menu,
       selectedKeys,
+      openKeys,
       routerlink,
+      openChange,
     };
   },
 });

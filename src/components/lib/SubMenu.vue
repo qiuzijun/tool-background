@@ -22,7 +22,6 @@ import { PieChartOutlined, MailOutlined } from "@ant-design/icons-vue";
 import { defineComponent } from "vue";
 import { Menu } from "ant-design-vue";
 import { useRouter } from "vue-router";
-import { useStack } from "@/store/modules/stack";
 
 export default defineComponent({
   name: "SubMenu",
@@ -41,9 +40,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const store = useStack();
     const routerlink = (item) => {
-      store.addStack(item);
       router.push({
         name: `${item.name}`,
       });
