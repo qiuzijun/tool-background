@@ -67,6 +67,7 @@
           </span>
         </template>
         <template v-else-if="column.key === 'action'">
+          <a-button type="primary" size="small" class="modify">评论</a-button>
           <a-button
             type="primary"
             size="small"
