@@ -6,6 +6,7 @@
     style="color: red"
     :title="modalTitle"
     placement="right"
+    @close="close"
   >
     <slot name="content"></slot>
     <div class="footer" v-if="footerBtn">
@@ -15,7 +16,7 @@
   </a-drawer>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { Button, Drawer } from "ant-design-vue";
 export default defineComponent({
   name: "DrawerButton",
@@ -35,16 +36,31 @@ export default defineComponent({
       type: Boolean,
       deafault: false,
     },
+    // 外部控制弹框显示、隐藏
+    isShow: {
+      type: Boolean,
+      deafault: false,
+    },
   },
   components: {
     [Button.name]: Button,
     [Drawer.name]: Drawer,
   },
-  setup() {
+  setup(props, { emit }) {
     const visible = ref(false);
-
+    watch(
+      () => props.isShow,
+      (value) => {
+        if (value) visible.value = value;
+      }
+    );
+    // 弹窗关闭事件
+    const close = () => {
+      emit("update:isShow", false);
+    };
     return {
       visible,
+      close,
     };
   },
 });

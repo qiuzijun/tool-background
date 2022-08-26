@@ -87,7 +87,7 @@
 </template>
 <script>
 import { defineComponent, reactive, ref } from "vue";
-import { SmileOutlined, DownOutlined } from "@ant-design/icons-vue";
+import { SmileOutlined, DownOutlined, PropertySafetyFilled } from "@ant-design/icons-vue";
 import {
   Layout,
   message,
@@ -138,6 +138,7 @@ export default defineComponent({
     const modify = (value) => {
       console.log(value);
     };
+
     const columns = [
       {
         title: "主图",
