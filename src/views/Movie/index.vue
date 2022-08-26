@@ -143,11 +143,13 @@ export default defineComponent({
         title: "主图",
         dataIndex: "img",
         key: "img",
+        width: 120,
       },
       {
         title: "名字",
         dataIndex: "name",
         key: "name",
+        width: 120,
       },
       {
         title: "描述",
@@ -158,16 +160,24 @@ export default defineComponent({
         title: "发布时间",
         dataIndex: "releaseTime",
         key: "releaseTime",
+        width: 120,
       },
       {
         title: "更新时间",
         dataIndex: "updateTime",
         key: "updateTime",
+        width: 120,
+      },
+      {
+        title: "地址",
+        dataIndex: "address",
+        key: "address",
       },
       {
         title: "类型",
         key: "type",
         dataIndex: "type",
+        width: 120,
       },
       {
         title: "标签",
@@ -187,6 +197,7 @@ export default defineComponent({
         describe: "最新最全的超高清电视剧，电影，综艺，动漫免费在线观看！",
         releaseTime: "2022-08-01",
         updateTime: "2022-08-01",
+        address: "https://www.tkys6.com",
         type: "高清",
         tags: [
           {
@@ -206,6 +217,7 @@ export default defineComponent({
         describe: "最新最全的超高清电视剧，电影，综艺，动漫免费在线观看！",
         releaseTime: "2022-08-01",
         updateTime: "2022-08-01",
+        address: "https://www.tkys6.com",
         type: "高清",
         tags: [
           {
@@ -221,6 +233,7 @@ export default defineComponent({
         describe: "最新最全的超高清电视剧，电影，综艺，动漫免费在线观看！",
         releaseTime: "2022-08-01",
         updateTime: "2022-08-01",
+        address: "https://www.tkys6.com",
         type: "高清",
         tags: [
           {
@@ -236,6 +249,7 @@ export default defineComponent({
         describe: "最新最全的超高清电视剧，电影，综艺，动漫免费在线观看！",
         releaseTime: "2022-08-01",
         updateTime: "2022-08-01",
+        address: "https://www.tkys6.com",
         type: "高清",
         tags: [
           {
@@ -251,6 +265,7 @@ export default defineComponent({
         describe: "最新最全的超高清电视剧，电影，综艺，动漫免费在线观看！",
         releaseTime: "2022-08-01",
         updateTime: "2022-08-01",
+        address: "https://www.tkys6.com",
         type: "高清",
         tags: [
           {

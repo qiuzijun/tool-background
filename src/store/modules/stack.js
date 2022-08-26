@@ -17,7 +17,7 @@ export const useStack = defineStore("stack", {
       let isStack = this.stack.every((data) => {
         return data.name !== item.name;
       })
-      if (isStack) {
+      if (isStack && item.name !== 'Login') {
         this.stack.push({
           ...item,
           icon: true

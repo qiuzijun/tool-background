@@ -8,6 +8,10 @@
     placement="right"
   >
     <slot name="content"></slot>
+    <div class="footer" v-if="footerBtn">
+      <a-button class="marginl-right">取消</a-button>
+      <a-button type="primary" class="marginl-right">确认</a-button>
+    </div>
   </a-drawer>
 </template>
 <script>
@@ -26,6 +30,11 @@ export default defineComponent({
       type: String,
       deafault: "",
     },
+    // 底部 取消、确认按钮
+    footerBtn: {
+      type: Boolean,
+      deafault: false,
+    },
   },
   components: {
     [Button.name]: Button,
@@ -40,3 +49,20 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="less" scoped>
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .marginl-left {
+    margin-left: 20px;
+  }
+  .marginl-right {
+    margin-right: 20px;
+  }
+}
+</style>
