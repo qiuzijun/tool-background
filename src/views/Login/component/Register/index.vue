@@ -8,13 +8,13 @@
   >
     <a-form-item> 注册 </a-form-item>
     <a-form-item
-      name="username"
-      :rules="[{ required: true, message: 'Please input your username!' }]"
+      name="account"
+      :rules="[{ required: true, message: '请输入账户名!' }]"
     >
       <a-input
         size="large"
         placeholder="账户"
-        v-model:value="formState.username"
+        v-model:value="formState.account"
       />
     </a-form-item>
 
@@ -35,16 +35,25 @@
       </a-popover>
     </a-form-item>
     <a-form-item
-      name="confirmPassword"
+      name="confirm"
       :rules="[{ required: true, message: '请输入再次密码' }]"
     >
       <a-input-password
         size="large"
         placeholder="确认密码"
-        v-model:value="formState.confirmPassword"
+        v-model:value="formState.confirm"
       />
     </a-form-item>
-
+    <a-form-item
+      name="mobile"
+      :rules="[{ required: true, message: '请输入手机号!' }]"
+    >
+      <a-input
+        size="large"
+        placeholder="手机号"
+        v-model:value="formState.mobile"
+      />
+    </a-form-item>
     <a-form-item>
       <a-button
         :disabled="disabled"
@@ -64,9 +73,18 @@
 <script>
 import { defineComponent, reactive, ref, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
-import { Form, Button, Input, Checkbox,Popover } from "ant-design-vue";
+import {
+  Form,
+  Button,
+  Input,
+  Checkbox,
+  Popover,
+  message,
+} from "ant-design-vue";
 import MyPopover from "./MyPopover.vue";
 import { userPassStrong } from "@/hooks/passstrength";
+import { Register } from "@/api/user";
+import AES from "@/utils/crypto";
 export default defineComponent({
   components: {
     [Form.name]: Form,
@@ -83,9 +101,10 @@ export default defineComponent({
 
   setup() {
     const formState = reactive({
-      username: "",
+      account: "",
       password: "",
-      confirmPassword: "",
+      confirm: "",
+      mobile: "",
     });
     const active = ref(1);
     // 密码输入事件
@@ -93,7 +112,16 @@ export default defineComponent({
       active.value = userPassStrong(e.target.value);
     };
     const onFinish = (values) => {
-      console.log("Success:", values);
+      if (formState.password !== formState.confirm)
+        message.warning("密码不一致");
+      else
+        Register({ ...values, uid: AES.generatekey(16) })
+          .then((data) => {
+            message.success(data.message);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -102,9 +130,10 @@ export default defineComponent({
 
     const disabled = computed(() => {
       return !(
-        formState.username &&
+        formState.account &&
         formState.password &&
-        formState.confirmPassword
+        formState.confirm &&
+        formState.mobile
       );
     });
     return {

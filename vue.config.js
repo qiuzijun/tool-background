@@ -2,7 +2,7 @@ const { defineConfig } = require("@vue/cli-service");
 const path = require("path");
 let baseURL; //环境地址
 if (process.env.NODE_ENV === "development") {
-  baseURL = "http://localhost:9090"; //本地环境
+  baseURL = "http://localhost:4000"; //本地环境
 } else {
   baseURL = "http://localhost:9090"; //生产环境
 }

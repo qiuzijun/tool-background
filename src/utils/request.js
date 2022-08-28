@@ -1,7 +1,7 @@
 import axios from "axios";
-import {
-  getToken
-} from "./tool";
+import { message } from "ant-design-vue";
+import { getToken } from "./tool";
+import AES from "./crypto";
 const request = axios.create({
   baseURL: "/api",
   timeout: 5000,
@@ -24,11 +24,14 @@ request.interceptors.response.use(
     const code = response.data.code;
     switch (code) {
       case 200: //为200执行该行
+        // message.success(response.data.message);
         return response.data; //成功直接返回
-      case 401: //为1300执行该行
-        return;
+      case 400: //为1300执行该行
+        message.error(response.data.message);
+        return Promise.reject(response.data);
       case 500: //为1300执行该行
-        return;
+        message.error(response.data.message);
+        return Promise.reject(response.data);
       default: //都不相同执行该行
         return response.data;
     }

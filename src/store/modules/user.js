@@ -1,18 +1,24 @@
 import { defineStore } from "pinia";
 import { setToken } from "@/utils/tool";
+import AES from "@/utils/crypto";
+import { Login } from "@/api/user";
 export const useUser = defineStore("user", {
   state: () => ({
     userInfo: {},
-    token: "",
   }),
   actions: {
     login({ account, password }) {
+      let uid = AES.generatekey(16);
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          this.token = "FNRUEGHV5UTJNBRYTRU";
-          setToken("FNRUEGHV5UTJNBRYTRU");
-          resolve();
-        }, 500);
+        Login({ account, password, uid })
+          .then((data) => {
+            this.userInfo = data.data;
+            setToken(data.data.token);
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
   },

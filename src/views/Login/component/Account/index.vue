@@ -137,7 +137,7 @@ export default defineComponent({
           values.checked ? setPass(values) : setPass({});
         })
         .catch((err) => {
-          message.error("登录失败");
+          console.log(err);
         });
     };
     // 提交表单且数据验证失败后回调事件
